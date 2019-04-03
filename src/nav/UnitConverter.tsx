@@ -18,7 +18,7 @@ class UnitConverter extends Component<UnitConverterProps, {}> {
         <span className={`unit-value ${this.props.unit === 'F' ? 'active-unit' : ''}`} onClick={this.handleUnitConversion}>F</span>
       </div>
     );
-}
+  }
 }
 
 export default UnitConverter;

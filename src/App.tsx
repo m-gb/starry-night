@@ -12,7 +12,7 @@ interface AppState {
 }
 
 class App extends Component<{}, AppState> {
-  constructor(props: any) {
+  constructor(props: {}) {
     super(props);
     this.state = {
       query: '',
@@ -24,18 +24,16 @@ class App extends Component<{}, AppState> {
   onConvertUnit = (newUnit: string) => {
     this.setState({
       unit: newUnit
-    }, this.notifyStateChange)
+    }, this.notifyStateChange);
   }
 
   onSubmitSearch = (searchQuery: string) => {
     this.setState({
       query: searchQuery
-    }, this.notifyStateChange)
+    }, this.notifyStateChange);
   }
 
   notifyStateChange = () => {
-    // Fetch data for unit
-    // Fetch data for city/zipcode
     console.log(this.state);
   }
 

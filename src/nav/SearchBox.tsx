@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export interface SearchBoxProps {
+interface SearchBoxProps {
   submitSearch: (searchQuery: string) => void
 }
 
-export interface SearchBoxState {
+interface SearchBoxState {
   query: string
 }
 

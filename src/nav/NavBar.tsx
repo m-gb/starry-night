@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SearchBox from './SearchBox';
 import UnitConverter from './UnitConverter';
 
-export interface NavBarProps {
+interface NavBarProps {
   convertUnit: (newUnit: string) => void,
   submitSearch: (searchQuery: string) => void,
   unit: string
@@ -15,7 +15,7 @@ class NavBar extends Component<NavBarProps, {}> {
 
   sendSearchQueryToParent = (searchQuery: string) => {
     this.props.submitSearch(searchQuery);
-}
+  }
 
   render() {
     return (
