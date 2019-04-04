@@ -6,8 +6,8 @@ interface UnitConverterProps {
 }
 
 class UnitConverter extends Component<UnitConverterProps, {}> {
-  handleUnitConversion = (e: any) => {
-    const newUnit = e.target.textContent;
+  handleUnitConversion = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const newUnit: string = e.currentTarget.innerText;
     this.props.convertUnit(newUnit);
   }
 

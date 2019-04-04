@@ -5,7 +5,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import NavBar from './nav/NavBar';
 import './App.css';
 
-
 interface AppState {
   query: string,
   unit: string

@@ -17,13 +17,13 @@ class SearchBox extends Component<SearchBoxProps, SearchBoxState> {
     };
   }
 
-  handleQueryChange = (e: any) => {
+  handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      query: e.target.value
-    })
+      query: e.currentTarget.value
+    });
   }
 
-  handleSearch = (e: any) => {
+  handleSearch = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     console.log('Fetching weather data for: ', this.state.query);
     this.props.submitSearch(this.state.query);
