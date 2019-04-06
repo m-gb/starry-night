@@ -1,32 +1,31 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-interface SearchBoxProps {
-  submitSearch: (searchQuery: string) => void
+interface SearchBarProps {
+  submitSearch: (newSearchQuery: string) => void
 }
 
-interface SearchBoxState {
-  query: string
+interface SearchBarState {
+  searchQuery: string
 }
 
-class SearchBox extends Component<SearchBoxProps, SearchBoxState> {
-  constructor(props: SearchBoxProps) {
+class SearchBar extends Component<SearchBarProps, SearchBarState> {
+  constructor(props: SearchBarProps) {
     super(props);
     this.state = {
-      query: ''
+      searchQuery: ''
     };
   }
 
   handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      query: e.currentTarget.value
+      searchQuery: e.currentTarget.value
     });
   }
 
   handleSearch = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
-    console.log('Fetching weather data for: ', this.state.query);
-    this.props.submitSearch(this.state.query);
+    this.props.submitSearch(this.state.searchQuery);
   }
 
   render() {
@@ -35,9 +34,9 @@ class SearchBox extends Component<SearchBoxProps, SearchBoxState> {
         <form onSubmit={this.handleSearch}>
           <input
             type="search"
-            value={this.state.query}
-            name="searchBox"
-            id="searchBox"
+            value={this.state.searchQuery}
+            name="SearchBar"
+            id="SearchBar"
             placeholder="Enter City or Zipcode"
             onChange={this.handleQueryChange} />
           <span onClick={this.handleSearch}>
@@ -49,4 +48,4 @@ class SearchBox extends Component<SearchBoxProps, SearchBoxState> {
   }
 }
 
-export default SearchBox;
+export default SearchBar;

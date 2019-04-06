@@ -6,7 +6,7 @@ import NavBar from './nav/NavBar';
 import './App.css';
 
 interface AppState {
-  query: string,
+  searchQuery: string,
   unit: string
 }
 
@@ -14,7 +14,7 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      query: '',
+      searchQuery: '',
       unit: 'C'
     };
     library.add(fab, fas);
@@ -26,9 +26,9 @@ class App extends Component<{}, AppState> {
     }, this.notifyStateChange);
   }
 
-  onSubmitSearch = (searchQuery: string) => {
+  onSubmitSearch = (query: string) => {
     this.setState({
-      query: searchQuery
+      searchQuery: query
     }, this.notifyStateChange);
   }
 

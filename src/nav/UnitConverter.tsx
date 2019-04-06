@@ -6,7 +6,7 @@ interface UnitConverterProps {
 }
 
 class UnitConverter extends Component<UnitConverterProps, {}> {
-  handleUnitConversion = (e: React.MouseEvent<HTMLSpanElement>) => {
+  handleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
     const newUnit: string = e.currentTarget.innerText;
     this.props.convertUnit(newUnit);
   }
@@ -14,8 +14,8 @@ class UnitConverter extends Component<UnitConverterProps, {}> {
   render() {
     return (
       <div className="unit-container">
-        <span className={`unit-value ${this.props.unit === 'C' ? 'active-unit' : ''}`} onClick={this.handleUnitConversion}>C</span>
-        <span className={`unit-value ${this.props.unit === 'F' ? 'active-unit' : ''}`} onClick={this.handleUnitConversion}>F</span>
+        <span className={`unit-value ${this.props.unit == 'C' ? 'active' : ''}`} onClick={this.handleClick}>C</span>
+        <span className={`unit-value ${this.props.unit == 'F' ? 'active' : ''}`} onClick={this.handleClick}>F</span>
       </div>
     );
   }

@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
-import SearchBox from './SearchBox';
+import SearchBar from './SearchBar';
 import UnitConverter from './UnitConverter';
 
 interface NavBarProps {
   convertUnit: (newUnit: string) => void,
-  submitSearch: (searchQuery: string) => void,
+  submitSearch: (newSearchQuery: string) => void,
   unit: string
 }
 
 class NavBar extends Component<NavBarProps, {}> {
-  sendNewUnitToParent = (newUnit: string) => {
+  convertUnit = (newUnit: string) => {
     this.props.convertUnit(newUnit);
   }
 
-  sendSearchQueryToParent = (searchQuery: string) => {
-    this.props.submitSearch(searchQuery);
+  submitSearch = (newSearchQuery: string) => {
+    this.props.submitSearch(newSearchQuery);
   }
 
   render() {
     return (
       <nav>
-        <SearchBox submitSearch={this.sendSearchQueryToParent} />
+        <SearchBar submitSearch={this.submitSearch} />
         <div>Starry Night</div>
-        <UnitConverter convertUnit={this.sendNewUnitToParent} unit={this.props.unit} />
+        <UnitConverter convertUnit={this.convertUnit} unit={this.props.unit} />
       </nav>
     );
   }
