@@ -4,25 +4,27 @@ import UnitConverter from './UnitConverter';
 
 interface NavBarProps {
   convertUnit: (newUnit: string) => void,
-  submitSearch: (newSearchQuery: string) => void,
+  submitSearch: (newQuery: string) => void
   unit: string
 }
 
 class NavBar extends Component<NavBarProps, {}> {
-  convertUnit = (newUnit: string) => {
+  sendNewUnitToParent = (newUnit: string) => {
     this.props.convertUnit(newUnit);
   }
 
-  submitSearch = (newSearchQuery: string) => {
-    this.props.submitSearch(newSearchQuery);
+  sendNewQueryToParent = (newQuery: string) => {
+    this.props.submitSearch(newQuery);
   }
 
   render() {
     return (
-      <nav>
-        <SearchBar submitSearch={this.submitSearch} />
-        <div>Starry Night</div>
-        <UnitConverter convertUnit={this.convertUnit} unit={this.props.unit} />
+      <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+        <div className="collapse navbar-collapse">
+          <span className="navbar-brand text-info">Starry Night</span>
+        </div>
+          <UnitConverter convertUnit={this.sendNewUnitToParent} unit={this.props.unit} />
+          <SearchBar submitSearch={this.sendNewQueryToParent} />
       </nav>
     );
   }

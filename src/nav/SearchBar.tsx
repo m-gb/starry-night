@@ -2,48 +2,49 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface SearchBarProps {
-  submitSearch: (newSearchQuery: string) => void
+  submitSearch: (newQuery: string) => void
 }
 
 interface SearchBarState {
-  searchQuery: string
+  query: string
 }
 
 class SearchBar extends Component<SearchBarProps, SearchBarState> {
   constructor(props: SearchBarProps) {
     super(props);
     this.state = {
-      searchQuery: ''
+      query: ''
     };
   }
 
   handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      searchQuery: e.currentTarget.value
+      query: e.currentTarget.value
     });
   }
 
   handleSearch = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
-    this.props.submitSearch(this.state.searchQuery);
+    this.props.submitSearch(this.state.query);
   }
 
   render() {
     return (
-      <div className="form-container">
-        <form onSubmit={this.handleSearch}>
+      <form className="form-inline" onSubmit={this.handleSearch}>
+        <div className="input-group">
           <input
+            className="form-control"
             type="search"
-            value={this.state.searchQuery}
+            value={this.state.query}
             name="SearchBar"
             id="SearchBar"
             placeholder="Enter City or Zipcode"
             onChange={this.handleQueryChange} />
-          <span onClick={this.handleSearch}>
-            <FontAwesomeIcon icon={['fas', 'search']} />
-          </span>
-        </form>
-      </div>
+          <div className="input-group-append">
+            <button className="btn btn-outline-info" onClick={this.handleSearch}><FontAwesomeIcon icon={['fas', 'search']} /></button>
+          </div>
+        </div>
+      </form>
     );
   }
 }

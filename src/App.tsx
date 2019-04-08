@@ -3,10 +3,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import NavBar from './nav/NavBar';
-import './App.css';
 
 interface AppState {
-  searchQuery: string,
+  query: string,
   unit: string
 }
 
@@ -14,7 +13,7 @@ class App extends Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      searchQuery: '',
+      query: '',
       unit: 'C'
     };
     library.add(fab, fas);
@@ -26,9 +25,9 @@ class App extends Component<{}, AppState> {
     }, this.notifyStateChange);
   }
 
-  onSubmitSearch = (query: string) => {
+  onSubmitSearch = (newQuery: string) => {
     this.setState({
-      searchQuery: query
+      query: newQuery
     }, this.notifyStateChange);
   }
 
@@ -38,11 +37,12 @@ class App extends Component<{}, AppState> {
 
   render() {
     return (
-      <NavBar
-        submitSearch={this.onSubmitSearch}
-        convertUnit={this.onConvertUnit}
-        unit={this.state.unit}
-      />
+      <div>
+        <NavBar convertUnit={this.onConvertUnit} submitSearch={this.onSubmitSearch} unit={this.state.unit} />
+        <div className="container text-light">
+          
+        </div>
+      </div>
     );
   }
 }
