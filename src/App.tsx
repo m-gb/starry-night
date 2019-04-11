@@ -3,26 +3,18 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import './App.css';
+import ErrorBoundary from './ErrorBoundary';
 import NavBar from './nav/NavBar';
-import CurrentWeather from './CurrentWeather';
+import CurrentWeather from './weather/CurrentWeather';
+import ForecastWeather from './weather/ForecastWeather';
 
 interface AppState {
   query: string,
   unit: string,
-  coordinates: number[],
-  currentWeatherData?: WeatherData
-}
-
-export interface WeatherData {
-  location: string,
-  weather: string,
-  date: string,
-  temp: number,
-  maxTemp: number,
-  minTemp: number,
-  pressure: number,
-  humidity: number,
-  windSpeed: number
+  coordinates?: { latitude: number, longitude: number },
+  currentWeatherData?: any,
+  forecastWeatherData?: any
 }
 
 class App extends Component<{}, AppState> {
@@ -30,19 +22,7 @@ class App extends Component<{}, AppState> {
     super(props);
     this.state = {
       query: '',
-      unit: 'C',
-      coordinates: []
-      // currentWeatherData: {
-      //   location: '',
-      //   weather: '',
-      //   date: '',
-      //   temp: 0,
-      //   maxTemp: 0,
-      //   minTemp: 0,
-      //   pressure: 0,
-      //   humidity: 0,
-      //   windSpeed: 0
-      // }
+      unit: 'C'
     };
     library.add(fab, fas);
   }
@@ -56,7 +36,7 @@ class App extends Component<{}, AppState> {
   onSubmitSearch = (newQuery: string) => {
     this.setState({
       query: newQuery,
-      coordinates: [] // reset coordinates
+      coordinates: undefined // Reset coordinates
     }, this.notifyStateChange);
   }
 
@@ -64,79 +44,79 @@ class App extends Component<{}, AppState> {
   componentDidMount() {
     const geolocation: Geolocation = navigator.geolocation;
     if (geolocation) {
-      const permissionGranted = (position: Position) => {
+      geolocation.getCurrentPosition((position) => {
         this.setState({
-          coordinates:  [ position.coords.latitude, position.coords.longitude ]
+          coordinates: { latitude: position.coords.latitude, longitude: position.coords.longitude }
         }, this.notifyStateChange);
-      }
-      const permissionDenied = () => {
-        console.log('Permission denied');
-      }
-      geolocation.getCurrentPosition(permissionGranted, permissionDenied);
+      }, () => {
+        throw new Error('Geolocation permission was denied.');
+      });
     } else {
-      console.log('Geolocation not supported');
+      throw new Error('Geolocation is not supported by the browser.');
     }
   }
 
-  notifyStateChange = () => {
-    const hasCoordinates: boolean = (this.state.coordinates.length > 0);
+  notifyStateChange() {
+    const hasCoordinates: boolean = (this.state.coordinates != undefined);
     const hasCityOrZipcode: boolean = (this.state.query != '');
     if (hasCoordinates || hasCityOrZipcode) {
-      this.fetchWeatherForecast(hasCoordinates).then(forecastData => {
-        console.log(forecastData);
-        const newCurrentWeatherData = this.parseCurrentWeatherData(forecastData);
+      // Retrieve current weather
+      this.fetchWeatherForecast(this.state.coordinates, 'weather').then((forecastData: any) => {
         this.setState({
-          currentWeatherData: newCurrentWeatherData
-        })
-      }).catch(err => {
-        console.log('Error: ', err);
+          currentWeatherData: forecastData
+        });
+      }).catch(() => {
+        throw new Error('There was an issue processing the weather data.');
+      });
+      // Retrieve 5-day forecast
+      this.fetchWeatherForecast(this.state.coordinates, 'forecast').then((forecastData: any) => {
+        this.setState({
+          forecastWeatherData: forecastData
+        });
+      }).catch(() => {
+        throw new Error('There was an issue processing the forecast data.');
       });
     }
   }
 
-  fetchWeatherForecast = (hasCoordinates: boolean) => {
+  // Retrieve weather data from the API
+  fetchWeatherForecast(coordinates: any, service: string): Promise<any> {
     const API_KEY: string = '********************************'; // API key from openweathermap.org
-    const BASE_URL: string = 'https://api.openweathermap.org/data/2.5/forecast';
-    const queryParams: string = (hasCoordinates) ? `lat=${this.state.coordinates[0]}&lon=${this.state.coordinates[1]}` : `q=${this.state.query}`;
+    const BASE_URI: string = 'https://api.openweathermap.org/data/2.5';
+    const queryParams: string = (coordinates) ? `lat=${coordinates.latitude}&lon=${coordinates.longitude}` : `q=${this.state.query}`;
     const unitType: string = (this.state.unit == 'C') ? 'metric' : 'imperial';
-    const url: string = `${BASE_URL}?${queryParams}&units=${unitType}&cnt=7&appid=${API_KEY}`;
-    return axios.get(url).then(res => {
+    const uri: string = `${BASE_URI}/${service}?${queryParams}&units=${unitType}&cnt=40&appid=${API_KEY}`;
+    return axios.get(uri).then(res => {
       return res.data;
-    }).catch(err => {
-      console.log('Error: ', err);
+    }).catch(() => {
+      throw new Error('Failed to retrieve data from the weather service.');
     })
   }
 
-  parseCurrentWeatherData = (data: any) => {
-    const location = `${data.city.name}, ${data.city.country}`;
-    const weather = data.list[0].weather[0].description;
-    const time = (data.list[0].dt * 1000);
-    const date = new Date(time).toDateString();
-    const temp = Math.round(data.list[0].main.temp);
-    const maxTemp = Math.round(data.list[0].main.temp_max);
-    const minTemp = Math.round(data.list[0].main.temp_min);
-    const pressure = data.list[0].main.pressure;
-    const humidity = data.list[0].main.humidity;
-    const windSpeed = data.list[0].wind.speed;
-    return {
-      location,
-      weather,
-      date,
-      temp,
-      maxTemp,
-      minTemp,
-      pressure,
-      humidity,
-      windSpeed
-    };
-  }
-
   render() {
+    const hasCurrentData = this.state.currentWeatherData;
+    const hasForecastData = this.state.forecastWeatherData;
+    const windSpeedUnit = (this.state.unit == 'C') ? 'm/s' : 'miles/hr';
     return (
       <div>
         <NavBar convertUnit={this.onConvertUnit} submitSearch={this.onSubmitSearch} unit={this.state.unit} />
-        <div className="container text-light">
-          <CurrentWeather currentWeatherData={this.state.currentWeatherData} unit={this.state.unit}/>
+        <div className="text-light">
+          {
+            (hasCurrentData && hasForecastData) ?
+              (
+                <main className="container">
+                  <ErrorBoundary>
+                    <CurrentWeather currentWeatherData={hasCurrentData} windSpeedUnit={windSpeedUnit} />
+                    <ForecastWeather forecastWeatherData={hasForecastData} windSpeedUnit={windSpeedUnit} />
+                  </ErrorBoundary>
+                </main>
+              ) :
+              (
+                <main className="container">
+                  <h3 className="missing-location">Please allow location access or enter a city or zipcode in the search bar.</h3>
+                </main>
+              )
+          }
         </div>
       </div>
     );
