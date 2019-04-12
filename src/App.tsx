@@ -3,8 +3,6 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import './App.css';
-import ErrorBoundary from './ErrorBoundary';
 import NavBar from './nav/NavBar';
 import CurrentWeather from './weather/CurrentWeather';
 import ForecastWeather from './weather/ForecastWeather';
@@ -49,7 +47,9 @@ class App extends Component<{}, AppState> {
           coordinates: { latitude: position.coords.latitude, longitude: position.coords.longitude }
         }, this.notifyStateChange);
       }, () => {
-        throw new Error('Geolocation permission was denied.');
+        this.setState(() => {
+          throw new Error('Geolocation permission was denied.');
+        });
       });
     } else {
       throw new Error('Geolocation is not supported by the browser.');
@@ -65,32 +65,38 @@ class App extends Component<{}, AppState> {
         this.setState({
           currentWeatherData: forecastData
         });
-      }).catch(() => {
-        throw new Error('There was an issue processing the weather data.');
+      }).catch(err => {
+        this.setState(() => {
+          throw new Error(`There was an issue processing the weather data: ${err.message}`);
+        });
       });
       // Retrieve 5-day forecast
       this.fetchWeatherForecast(this.state.coordinates, 'forecast').then((forecastData: any) => {
         this.setState({
           forecastWeatherData: forecastData
         });
-      }).catch(() => {
-        throw new Error('There was an issue processing the forecast data.');
+      }).catch(err => {
+        this.setState(() => {
+          throw new Error(`There was an issue processing the forecast data: ${err.message}`);
+        });
       });
     }
   }
 
   // Retrieve weather data from the API
   fetchWeatherForecast(coordinates: any, service: string): Promise<any> {
-    const API_KEY: string = '********************************'; // API key from openweathermap.org
+    const API_KEY: string = '52058024b4ce216ce76794fd8d5eb52e'; // API key from openweathermap.org
     const BASE_URI: string = 'https://api.openweathermap.org/data/2.5';
     const queryParams: string = (coordinates) ? `lat=${coordinates.latitude}&lon=${coordinates.longitude}` : `q=${this.state.query}`;
     const unitType: string = (this.state.unit == 'C') ? 'metric' : 'imperial';
     const uri: string = `${BASE_URI}/${service}?${queryParams}&units=${unitType}&cnt=40&appid=${API_KEY}`;
     return axios.get(uri).then(res => {
       return res.data;
-    }).catch(() => {
-      throw new Error('Failed to retrieve data from the weather service.');
-    })
+    }).catch(err => {
+      this.setState(() => {
+        throw new Error(`Failed to retrieve data from the weather service: ${err.message}`);
+      });
+    });
   }
 
   render() {
@@ -105,15 +111,13 @@ class App extends Component<{}, AppState> {
             (hasCurrentData && hasForecastData) ?
               (
                 <main className="container">
-                  <ErrorBoundary>
-                    <CurrentWeather currentWeatherData={hasCurrentData} windSpeedUnit={windSpeedUnit} />
-                    <ForecastWeather forecastWeatherData={hasForecastData} windSpeedUnit={windSpeedUnit} />
-                  </ErrorBoundary>
+                  <CurrentWeather currentWeatherData={hasCurrentData} windSpeedUnit={windSpeedUnit} />
+                  <ForecastWeather forecastWeatherData={hasForecastData} windSpeedUnit={windSpeedUnit} />
                 </main>
               ) :
               (
                 <main className="container">
-                  <h3 className="missing-location">Please allow location access or enter a city or zipcode in the search bar.</h3>
+                  <h3 className="error-message">Please allow location access or enter a city or zipcode in the search bar.</h3>
                 </main>
               )
           }
