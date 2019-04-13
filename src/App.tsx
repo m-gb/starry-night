@@ -29,7 +29,6 @@ class App extends Component<{}, AppState> {
   onConvertUnit = (newUnit: string) => {
     this.setState({
       unit: newUnit,
-      currentWeatherData: undefined,
       forecastWeatherData: undefined
     }, this.notifyStateChange);
   }
@@ -63,26 +62,28 @@ class App extends Component<{}, AppState> {
     const hasCoordinates: boolean = (this.state.coordinates != undefined);
     const hasQuery: boolean = (this.state.query != '');
     if (hasCoordinates || hasQuery) {
-      // Retrieve current weather
-      this.fetchWeatherForecast(this.state.coordinates, 'weather').then((currentData: any) => {
-        this.setState({
-          currentWeatherData: currentData
+      this.fetchWeatherForecast(this.state.coordinates, 'weather')
+        .then((currentData: any) => {
+          this.setState({
+            currentWeatherData: currentData
+          });
+        })
+        .catch((err: Error) => {
+          this.setState(() => {
+            throw new Error(`There was an issue processing the weather service data: ${err.message}`);
+          });
         });
-      }).catch((err: Error) => {
-        this.setState(() => {
-          throw new Error(`There was an issue processing the weather data: ${err.message}`);
+      this.fetchWeatherForecast(this.state.coordinates, 'forecast')
+        .then((forecastData: any) => {
+          this.setState({
+            forecastWeatherData: forecastData
+          });
+        })
+        .catch((err: Error) => {
+          this.setState(() => {
+            throw new Error(`There was an issue processing the weather service data: ${err.message}`);
+          });
         });
-      });
-      // Retrieve 5-day forecast
-      this.fetchWeatherForecast(this.state.coordinates, 'forecast').then((forecastData: any) => {
-        this.setState({
-          forecastWeatherData: forecastData
-        });
-      }).catch((err: Error) => {
-        this.setState(() => {
-          throw new Error(`There was an issue processing the forecast data: ${err.message}`);
-        });
-      });
     }
   }
 
