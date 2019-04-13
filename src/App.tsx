@@ -88,7 +88,7 @@ class App extends Component<{}, AppState> {
 
   // Retrieve weather data from the API
   fetchWeatherForecast(coordinates: any, service: string): Promise<any> {
-    const API_KEY: string = '52058024b4ce216ce76794fd8d5eb52e'; // API key from openweathermap.org
+    const API_KEY: string = `${process.env.REACT_APP_API_KEY}`;
     const BASE_URI: string = 'https://api.openweathermap.org/data/2.5';
     const queryParams: string = (coordinates) ? `lat=${coordinates.latitude}&lon=${coordinates.longitude}` : `q=${this.state.query}`;
     const unitType: string = (this.state.unit == 'C') ? 'metric' : 'imperial';
