@@ -38,7 +38,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
             value={this.state.query}
             name="SearchBar"
             id="SearchBar"
-            placeholder="Enter City or Zipcode"
+            placeholder="Enter City"
             onChange={this.handleQueryChange} />
           <div className="input-group-append">
             <button className="btn btn-outline-info" onClick={this.handleSearch}><FontAwesomeIcon icon={['fas', 'search']} /></button>

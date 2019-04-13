@@ -3,6 +3,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import ErrorBoundary from './ErrorBoundary';
 import NavBar from './nav/NavBar';
 import CurrentWeather from './weather/CurrentWeather';
 import ForecastWeather from './weather/ForecastWeather';
@@ -27,7 +28,9 @@ class App extends Component<{}, AppState> {
 
   onConvertUnit = (newUnit: string) => {
     this.setState({
-      unit: newUnit
+      unit: newUnit,
+      currentWeatherData: undefined,
+      forecastWeatherData: undefined
     }, this.notifyStateChange);
   }
 
@@ -58,14 +61,14 @@ class App extends Component<{}, AppState> {
 
   notifyStateChange() {
     const hasCoordinates: boolean = (this.state.coordinates != undefined);
-    const hasCityOrZipcode: boolean = (this.state.query != '');
-    if (hasCoordinates || hasCityOrZipcode) {
+    const hasQuery: boolean = (this.state.query != '');
+    if (hasCoordinates || hasQuery) {
       // Retrieve current weather
-      this.fetchWeatherForecast(this.state.coordinates, 'weather').then((forecastData: any) => {
+      this.fetchWeatherForecast(this.state.coordinates, 'weather').then((currentData: any) => {
         this.setState({
-          currentWeatherData: forecastData
+          currentWeatherData: currentData
         });
-      }).catch(err => {
+      }).catch((err: Error) => {
         this.setState(() => {
           throw new Error(`There was an issue processing the weather data: ${err.message}`);
         });
@@ -75,7 +78,7 @@ class App extends Component<{}, AppState> {
         this.setState({
           forecastWeatherData: forecastData
         });
-      }).catch(err => {
+      }).catch((err: Error) => {
         this.setState(() => {
           throw new Error(`There was an issue processing the forecast data: ${err.message}`);
         });
@@ -92,7 +95,7 @@ class App extends Component<{}, AppState> {
     const uri: string = `${BASE_URI}/${service}?${queryParams}&units=${unitType}&cnt=40&appid=${API_KEY}`;
     return axios.get(uri).then(res => {
       return res.data;
-    }).catch(err => {
+    }).catch((err: Error) => {
       this.setState(() => {
         throw new Error(`Failed to retrieve data from the weather service: ${err.message}`);
       });
@@ -111,13 +114,15 @@ class App extends Component<{}, AppState> {
             (hasCurrentData && hasForecastData) ?
               (
                 <main className="container">
-                  <CurrentWeather currentWeatherData={hasCurrentData} windSpeedUnit={windSpeedUnit} />
-                  <ForecastWeather forecastWeatherData={hasForecastData} windSpeedUnit={windSpeedUnit} />
+                  <ErrorBoundary>
+                    <CurrentWeather currentWeatherData={hasCurrentData} windSpeedUnit={windSpeedUnit} />
+                    <ForecastWeather forecastWeatherData={hasForecastData} />
+                  </ErrorBoundary>
                 </main>
               ) :
               (
                 <main className="container">
-                  <h3 className="error-message">Please allow location access or enter a city or zipcode in the search bar.</h3>
+                  <h3 className="error-message">Please allow location access or enter a city in the search bar.</h3>
                 </main>
               )
           }
