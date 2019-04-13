@@ -29,7 +29,7 @@ class App extends Component<{}, AppState> {
   onConvertUnit = (newUnit: string) => {
     this.setState({
       unit: newUnit,
-      forecastWeatherData: undefined
+      forecastWeatherData: undefined // Reset forecastWeatherData
     }, this.notifyStateChange);
   }
 
