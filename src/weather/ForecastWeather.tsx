@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDayName } from '../utils/utils';
+import { getDayName, getIconColor, capitalize } from '../utils/utils';
 
 interface ForecastWeatherProps {
   forecastWeatherData: any
@@ -38,7 +38,7 @@ class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherSta
       }
       return noonList;
     }
-    catch(err) {
+    catch (err) {
       throw new Error(`There was an issue sorting the forecast data: ${err.message}`);
     }
   }
@@ -57,7 +57,7 @@ class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherSta
         day
       };
     }
-    catch(err) {
+    catch (err) {
       throw new Error(`There was an issue parsing the forecast data: ${err.message}`);
     }
   }
@@ -72,14 +72,29 @@ class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherSta
 
   render() {
     const weatherData: any = this.state.weatherData.map(element => (
-      <div key={element.day}>
-        <span>{element.day}</span> <p className={`wi wi-owm-${element.weatherId}`}> {element.temp}<i className="wi wi-degrees" /> {element.weatherDesc}</p>
+      <div className="col-lg-4">
+        <div className="card bg-dark text-center mb-4" key={element.day}>
+          <div className="row">
+            <div className="col-lg-12 pt-4">
+              <h5 className="card-title">{element.day}</h5>
+            </div>
+            <div className="forecast-text col-lg-6 card-body pl-3 pr-0 pb-4 pt-4">
+              <p className="card-text">{element.temp}<i className="wi wi-degrees" /></p>
+              <p className="card-text">{capitalize(element.weatherDesc)}</p>
+            </div>
+            <div className="col-lg-6 card-body pl-0 pr-5 pb-4 pt-2">
+              <i className={`forecast-image wi ${getIconColor(element.weatherId)} wi-owm-${element.weatherId}`} />
+            </div>
+          </div>
+        </div>
       </div>
     ));
     return (
       <div>
         <h3>Forecast weather:</h3>
-        {weatherData}
+        <div className="row">
+          {weatherData}
+        </div>
       </div>
     );
   }
