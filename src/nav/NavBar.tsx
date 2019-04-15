@@ -21,7 +21,7 @@ class NavBar extends Component<NavBarProps, {}> {
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
         <div className="collapse navbar-collapse">
-          <span className="navbar-brand text-info">Starry Night</span>
+          <span className="navbar-brand text-info"><img className="logo" src="favicon.ico" /> Starry Night</span>
         </div>
           <UnitConverter convertUnit={this.sendNewUnitToParent} unit={this.props.unit} />
           <SearchBar submitSearch={this.sendNewQueryToParent} />

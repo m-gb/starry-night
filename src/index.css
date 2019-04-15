@@ -21,3 +21,28 @@ code {
   justify-content: center;
   text-align: center;
 }
+
+.logo {
+  height: 4%;
+  width: 4%;
+}
+
+.wi-blue {
+  color:#0887b9;
+}
+
+.wi-yellow {
+  color:#fdec01;
+}
+
+.wi-gray {
+  color:#5f6d7c;
+}
+
+.forecast-text {
+  font-size: 1.2rem;
+}
+
+.forecast-image {
+  font-size: 8rem;
+}
