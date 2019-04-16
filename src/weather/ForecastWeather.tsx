@@ -70,31 +70,25 @@ class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherSta
     });
   }
 
-  render() {
-    const weatherData: any = this.state.weatherData.map(element => (
-      <div className="col-lg-4">
-        <div className="card bg-dark text-center mb-4" key={element.day}>
-          <div className="row">
-            <div className="col-lg-12 pt-4">
-              <h5 className="card-title">{element.day}</h5>
-            </div>
-            <div className="forecast-text col-lg-6 card-body pl-3 pr-0 pb-4 pt-4">
-              <p className="card-text">{element.temp}<i className="wi wi-degrees" /></p>
-              <p className="card-text">{capitalize(element.weatherDesc)}</p>
-            </div>
-            <div className="col-lg-6 card-body pl-0 pr-5 pb-4 pt-2">
-              <i className={`forecast-image wi ${getIconColor(element.weatherId)} wi-owm-${element.weatherId}`} />
-            </div>
+  showForecastdata = (forecastData: WeatherData[]): JSX.Element[] => {
+    return forecastData.map(element => (
+      <div className="col-lg-3" key={element.day}>
+        <div className="card bg-dark text-center mb-4">
+          <div className="card-body">
+            <h5 className="card-title">{element.day}</h5>
+            <p className="card-text">{element.temp}<i className="wi wi-degrees" /></p>
+            <p className="card-text">{capitalize(element.weatherDesc)}</p>
+            <i className={`forecast-img wi ${getIconColor(element.weatherId)} wi-owm-${element.weatherId}`} />
           </div>
         </div>
       </div>
     ));
+  }
+
+  render() {
     return (
-      <div>
-        <h3>Forecast weather:</h3>
-        <div className="row">
-          {weatherData}
-        </div>
+      <div className="row">
+        {this.showForecastdata(this.state.weatherData)}
       </div>
     );
   }

@@ -27,6 +27,18 @@ code {
   width: 4%;
 }
 
+.current-img {
+  font-size: 8rem;
+}
+
+.forecast-img {
+  font-size: 4rem;
+}
+
+.forecast-text {
+  font-size: 1.2rem;
+}
+
 .wi-blue {
   color:#0887b9;
 }
@@ -37,12 +49,4 @@ code {
 
 .wi-gray {
   color:#5f6d7c;
-}
-
-.forecast-text {
-  font-size: 1.2rem;
-}
-
-.forecast-image {
-  font-size: 8rem;
 }

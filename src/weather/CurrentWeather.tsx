@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDayName, getMonthName } from '../utils/utils';
+import { capitalize, getDayName, getMonthName, getIconColor } from '../utils/utils';
 
 interface CurrentWeatherProps {
   currentWeatherData: WeatherData,
@@ -43,7 +43,7 @@ class CurrentWeather extends Component<CurrentWeatherProps, {}> {
         windSpeed
       };
     }
-    catch(err) {
+    catch (err) {
       throw new Error(`There was an issue parsing the weather data: ${err.message}`);
     }
   }
@@ -52,13 +52,29 @@ class CurrentWeather extends Component<CurrentWeatherProps, {}> {
     const weatherData: WeatherData = this.parseWeatherData(this.props.currentWeatherData);
     return (
       <div>
-        <h3>Current weather:</h3>
-        <p>{weatherData.location}</p>
-        <p>{weatherData.day}, {weatherData.date}</p>
-        <p className={`wi wi-owm-${weatherData.weatherId}`}> {weatherData.temp}<i className="wi wi-degrees" /></p>
-        <p className="wi wi-humidity"> {weatherData.humidity}%</p>
-        <p className="wi wi-barometer"> {weatherData.pressure} hPa</p>
-        <p className="wi wi-strong-wind"> {weatherData.windSpeed} {this.props.windSpeedUnit}</p>
+        <h5 className="text-center py-3">{weatherData.location}</h5>
+        <div className="row pb-5">
+          <div className="col-lg-3 text-center">
+            <div className="pt-5">
+              <h3>{weatherData.day}</h3>
+              <h3>{weatherData.date}</h3>
+            </div>
+          </div>
+          <div className="col-lg-3 text-center">
+            <i className={`current-img wi ${getIconColor(weatherData.weatherId)} wi-owm-${weatherData.weatherId}`} />
+            <h5 className="pt-5">{capitalize(weatherData.weatherDesc)}</h5>
+          </div>
+          <div className="col-lg-3 text-center">
+            <h1 className="pt-5"> {weatherData.temp}<i className="wi wi-degrees" /></h1>
+          </div>
+          <div className="col-lg-3">
+            <div className="pt-4">
+              <p className="my-3" title="Humidity"><i className="wi wi-blue wi-humidity" /> {weatherData.humidity}%</p>
+              <p className="my-3" title="Pressure"><i className="wi wi-yellow wi-barometer" /> {weatherData.pressure} hPa</p>
+              <p className="my-3" title="Wind Speed"><i className="wi wi-gray wi-strong-wind" /> {weatherData.windSpeed} {this.props.windSpeedUnit}</p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
