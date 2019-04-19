@@ -31,7 +31,8 @@ class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherSta
       let noonList: any = data.list.filter((item: any) => item.dt_txt.split(' ')[1].includes('12'));
       let today: Date = new Date();
       let todayDate: string = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-      let firstElementDate: string = noonList[0].dt_txt.split(' ')[0]; // 2019-03-10
+      let dt: Date = new Date(noonList[0].dt * 1000);
+      let firstElementDate: string = `${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}`;
       // Removes the first element if today is part of the results (i.e. before 15:00).
       if (firstElementDate == todayDate) {
         noonList.shift();
