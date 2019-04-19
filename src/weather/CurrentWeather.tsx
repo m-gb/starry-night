@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { capitalize, getDayName, getMonthName, getIconColor } from '../utils/utils';
 
 interface CurrentWeatherProps {
-  currentWeatherData: WeatherData,
+  currentWeatherData: any,
   windSpeedUnit: string
 }
 
-export interface WeatherData {
+interface WeatherData {
   location: string,
   weatherId: number,
   weatherDesc: string,
@@ -18,38 +18,38 @@ export interface WeatherData {
   windSpeed: number
 }
 
-class CurrentWeather extends Component<CurrentWeatherProps, {}> {
-  parseWeatherData(data: any): WeatherData {
-    try {
-      const location = `${data.name}, ${data.sys.country}`;
-      const weatherId = data.weather[0].id;
-      const weatherDesc = data.weather[0].description;
-      const day = getDayName(data.dt * 1000);
-      const rawDate = new Date(data.dt * 1000);
-      const date = `${rawDate.getDate()} ${getMonthName(data.dt * 1000)} ${rawDate.getFullYear()}`;
-      const temp = Math.round(data.main.temp);
-      const pressure = data.main.pressure;
-      const humidity = data.main.humidity;
-      const windSpeed = data.wind.speed;
-      return {
-        location,
-        weatherId,
-        weatherDesc,
-        day,
-        date,
-        temp,
-        pressure,
-        humidity,
-        windSpeed
-      };
-    }
-    catch (err) {
-      throw new Error(`There was an issue parsing the weather data: ${err.message}`);
-    }
+export function parseWeatherData(data: any): WeatherData {
+  try {
+    const location = `${data.name}, ${data.sys.country}`;
+    const weatherId = data.weather[0].id;
+    const weatherDesc = data.weather[0].description;
+    const day = getDayName(data.dt * 1000);
+    const rawDate = new Date(data.dt * 1000);
+    const date = `${rawDate.getDate()} ${getMonthName(data.dt * 1000)} ${rawDate.getFullYear()}`;
+    const temp = Math.round(data.main.temp);
+    const pressure = data.main.pressure;
+    const humidity = data.main.humidity;
+    const windSpeed = data.wind.speed;
+    return {
+      location,
+      weatherId,
+      weatherDesc,
+      day,
+      date,
+      temp,
+      pressure,
+      humidity,
+      windSpeed
+    };
   }
+  catch (err) {
+    throw new Error(`There was an issue parsing the weather data: ${err.message}`);
+  }
+}
 
+class CurrentWeather extends Component<CurrentWeatherProps, {}> {
   render() {
-    const weatherData: WeatherData = this.parseWeatherData(this.props.currentWeatherData);
+    const weatherData: WeatherData = parseWeatherData(this.props.currentWeatherData);
     return (
       <div>
         <h5 className="text-center py-3">{weatherData.location}</h5>

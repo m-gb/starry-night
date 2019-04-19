@@ -9,7 +9,7 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it("matches the snapshot", () => {
+it('matches the snapshot', () => {
   const component = create(<App />);
   expect(component.toJSON()).toMatchSnapshot();
 });
