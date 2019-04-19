@@ -6,7 +6,7 @@ it('returns the capitalized words', () => {
   expect(utils.capitalize(words)).toEqual(capitalizedWords);
 });
 
-it('returns the blue icon color', () => {
+it('returns the correct color', () => {
   const weatherId = 300;
   const color = 'wi-blue';
   expect(utils.getIconColor(weatherId)).toEqual(color);
