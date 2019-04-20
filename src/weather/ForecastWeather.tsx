@@ -16,6 +16,45 @@ interface WeatherData {
   day: string
 }
 
+// Retrieves the predictions at noon for the next 4-5 days,
+// since the API call returns a list of 8 predictions per day for 5 days.
+export function sortForecastData(data: any): any {
+  try {
+    let noonList: any = data.list.filter((item: any) => item.dt_txt.split(' ')[1].includes('12'));
+    let today: Date = new Date();
+    let todayDate: string = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+    let dt: Date = new Date(noonList[0].dt * 1000);
+    let firstElementDate: string = `${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}`;
+    // Removes the first element if today is part of the results (i.e. before 15:00).
+    if (firstElementDate == todayDate) {
+      noonList.shift();
+    }
+    return noonList;
+  }
+  catch (err) {
+    throw new Error(`There was an issue sorting the forecast data: ${err.message}`);
+  }
+}
+
+// Extracts relevant information from the API result.
+export function parseForecastData(data: any): WeatherData {
+  try {
+    const weatherId: number = data.weather[0].id;
+    const weatherDesc: string = data.weather[0].description;
+    const temp: number = Math.round(data.main.temp);
+    const day: string = getDayName(data.dt * 1000);
+    return {
+      weatherId,
+      weatherDesc,
+      temp,
+      day
+    };
+  }
+  catch (err) {
+    throw new Error(`There was an issue parsing the forecast data: ${err.message}`);
+  }
+}
+
 class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherState> {
   constructor(props: ForecastWeatherProps) {
     super(props);
@@ -24,48 +63,9 @@ class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherSta
     }
   }
 
-  // Retrieves the predictions at noon for the next 4-5 days,
-  // since the API call returns a list of 8 predictions per day for 5 days.
-  sortForecastData(data: any): any {
-    try {
-      let noonList: any = data.list.filter((item: any) => item.dt_txt.split(' ')[1].includes('12'));
-      let today: Date = new Date();
-      let todayDate: string = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
-      let dt: Date = new Date(noonList[0].dt * 1000);
-      let firstElementDate: string = `${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}`;
-      // Removes the first element if today is part of the results (i.e. before 15:00).
-      if (firstElementDate == todayDate) {
-        noonList.shift();
-      }
-      return noonList;
-    }
-    catch (err) {
-      throw new Error(`There was an issue sorting the forecast data: ${err.message}`);
-    }
-  }
-
-  // Extracts relevant information from the API result.
-  parseForecastData(data: any): WeatherData {
-    try {
-      const weatherId: number = data.weather[0].id;
-      const weatherDesc: string = data.weather[0].description;
-      const temp: number = Math.round(data.main.temp);
-      const day: string = getDayName(data.dt * 1000);
-      return {
-        weatherId,
-        weatherDesc,
-        temp,
-        day
-      };
-    }
-    catch (err) {
-      throw new Error(`There was an issue parsing the forecast data: ${err.message}`);
-    }
-  }
-
   componentDidMount() {
-    const sortedWeatherData: any = this.sortForecastData(this.props.forecastWeatherData);
-    const parsedWeatherData: WeatherData[] = sortedWeatherData.map((element: any) => this.parseForecastData(element));
+    const sortedWeatherData: any = sortForecastData(this.props.forecastWeatherData);
+    const parsedWeatherData: WeatherData[] = sortedWeatherData.map((element: any) => parseForecastData(element));
     this.setState({
       weatherData: parsedWeatherData
     });
