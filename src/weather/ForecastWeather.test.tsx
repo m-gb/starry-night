@@ -3,12 +3,23 @@ import { create } from 'react-test-renderer';
 import ForecastWeather from './ForecastWeather';
 import { parseForecastData, sortForecastData } from './ForecastWeather';
 
-const date = new Date(Date.now()).setHours(12);
+const date = Date.now() / 1000;
 
 const unsortedWeatherData = {
   list: [
     {
-      dt: new Date(date).setHours(18),
+      dt: date,
+      dt_txt: '2019-04-19 12:00:00',
+      weather: [{
+        id: 1,
+        description: 'scattered clouds'
+      }],
+      main: {
+        temp: 18
+      }
+    },
+    {
+      dt: new Date(date * 1000).setHours(18) / 1000,
       dt_txt: '2019-04-19 18:00:00',
       weather: [{
         id: 1,
@@ -19,7 +30,7 @@ const unsortedWeatherData = {
       }
     },
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 1),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 1) / 1000,
       dt_txt: '2019-04-20 12:00:00',
       weather: [{
         id: 2,
@@ -30,7 +41,7 @@ const unsortedWeatherData = {
       }
     },
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 2),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 2) / 1000,
       dt_txt: '2019-04-21 12:00:00',
       weather: [{
         id: 2,
@@ -41,7 +52,7 @@ const unsortedWeatherData = {
       }
     },
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 3),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 3) / 1000,
       dt_txt: '2019-04-22 12:00:00',
       weather: [{
         id: 3,
@@ -52,7 +63,7 @@ const unsortedWeatherData = {
       }
     },
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 4),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 4) / 1000,
       dt_txt: '2019-04-23 12:00:00',
       weather: [{
         id: 3,
@@ -68,7 +79,7 @@ const unsortedWeatherData = {
 it('sorts the weather data', () => {
   const sortedWeatherData = [
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 1),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 1) / 1000,
       dt_txt: '2019-04-20 12:00:00',
       weather: [{
         id: 2,
@@ -79,7 +90,7 @@ it('sorts the weather data', () => {
       }
     },
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 2),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 2) / 1000,
       dt_txt: '2019-04-21 12:00:00',
       weather: [{
         id: 2,
@@ -90,7 +101,7 @@ it('sorts the weather data', () => {
       }
     },
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 3),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 3) / 1000,
       dt_txt: '2019-04-22 12:00:00',
       weather: [{
         id: 3,
@@ -101,7 +112,7 @@ it('sorts the weather data', () => {
       }
     },
     {
-      dt: new Date(date).setDate(new Date(date).getDate() + 4),
+      dt: new Date(date * 1000).setDate(new Date(date * 1000).getDate() + 4) / 1000,
       dt_txt: '2019-04-23 12:00:00',
       weather: [{
         id: 3,
@@ -117,7 +128,7 @@ it('sorts the weather data', () => {
 
 it('parses the weather data', () => {
   const unparsedWeatherData = {
-    dt: (Date.now() / 1000),
+    dt: date,
     weather: [{
       id: 1,
       description: 'scattered clouds'

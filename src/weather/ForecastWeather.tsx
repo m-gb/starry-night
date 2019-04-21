@@ -21,10 +21,12 @@ interface WeatherData {
 export function sortForecastData(data: any): any {
   try {
     let noonList: any = data.list.filter((item: any) => item.dt_txt.split(' ')[1].includes('12'));
-    let today: Date = new Date();
+    let today: Date = new Date(Date.now());
     let todayDate: string = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+    console.log(todayDate);
     let dt: Date = new Date(noonList[0].dt * 1000);
     let firstElementDate: string = `${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}`;
+    console.log(firstElementDate);
     // Removes the first element if today is part of the results (i.e. before 15:00).
     if (firstElementDate == todayDate) {
       noonList.shift();
