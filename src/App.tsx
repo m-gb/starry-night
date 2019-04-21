@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import ErrorBoundary from './ErrorBoundary';
 import NavBar from './nav/NavBar';
@@ -23,7 +20,6 @@ class App extends Component<{}, AppState> {
       query: '',
       unit: 'C'
     };
-    library.add(fab, fas);
   }
 
   onConvertUnit = (newUnit: string) => {

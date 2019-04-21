@@ -3,19 +3,19 @@ import { create } from 'react-test-renderer';
 import ForecastWeather from './ForecastWeather';
 import { parseForecastData, sortForecastData } from './ForecastWeather';
 
-const date = 1555664754176;
+const date = new Date(Date.now()).setHours(12);
 
 const unsortedWeatherData = {
   list: [
     {
-      dt: new Date(date).setHours(new Date(date).getHours() + 9),
+      dt: new Date(date).setHours(18),
       dt_txt: '2019-04-19 18:00:00',
       weather: [{
         id: 1,
         description: 'scattered clouds'
       }],
       main: {
-        temp: 18
+        temp: 16
       }
     },
     {
