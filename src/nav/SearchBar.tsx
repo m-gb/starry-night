@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHourglass } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 interface SearchBarProps {
   submitSearch: (newQuery: string) => void
@@ -42,7 +42,7 @@ class SearchBar extends Component<SearchBarProps, SearchBarState> {
             placeholder="Enter City"
             onChange={this.handleQueryChange} />
           <div className="input-group-append">
-            <button className="btn btn-outline-info" onClick={this.handleSearch}><FontAwesomeIcon icon={ faHourglass } /></button>
+            <button className="btn btn-outline-info" onClick={this.handleSearch}><FontAwesomeIcon icon={ faSearch } /></button>
           </div>
         </div>
       </form>
