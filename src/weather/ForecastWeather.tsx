@@ -16,7 +16,7 @@ interface WeatherData {
   day: string
 }
 
-// Retrieves the predictions at noon for the next 4-5 days,
+// Retrieves the predictions at noon for the next 4 days,
 // since the API call returns a list of 8 predictions per day for 5 days.
 export function sortForecastData(data: any): any {
   try {
@@ -28,6 +28,9 @@ export function sortForecastData(data: any): any {
     // Removes the first element if today is part of the results (i.e. before 15:00).
     if (firstElementDate == todayDate) {
       noonList.shift();
+    }
+    else {
+      noonList.pop();
     }
     return noonList;
   }
