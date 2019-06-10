@@ -11,11 +11,11 @@ The app was written with Typescript and React. It also supports mobile devices.
 In order to run the application, you will need to run the following commands in a terminal:
 - Install the dependencies:
 ```bash
-    $ npm install
+$ npm install
 ```
 - Run the application:
 ```bash
-    $ HTTPS=true npm start
+$ HTTPS=true npm start
 ```
 - Go to https://localhost:3000
 
@@ -23,5 +23,5 @@ In order to run the application, you will need to run the following commands in 
 
 In order to run the tests, you will need to run the following commands in a terminal:
 ```bash
-    $ npm test
+$ npm test
 ```
