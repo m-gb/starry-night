@@ -6,6 +6,8 @@ The user can choose to provide their current location by allowing geolocation ac
 
 The app was written with Typescript and React. It also supports mobile devices.
 
+You can view the website at https://m-gb.github.io/starry-night
+
 ## Development
 
 In order to run the application, you will need to run the following commands in a terminal:
