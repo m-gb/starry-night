@@ -1,4 +1,4 @@
-# Starry Night
+# Starry Night :partly_sunny:
 ## Description
 This web application uses the OpenWeatherMap service to retrieve and display the current weather as well as the forecast for the next 4 days.
 
