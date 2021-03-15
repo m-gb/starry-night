@@ -15,7 +15,7 @@ code {
 }
 
 .error-message {
-  min-height: 100vh;
+  min-height: 93vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,6 +69,17 @@ code {
   height: 100vh;
 }
 
+.error-background {
+  background-image: url('./data-background.jpg');
+  background-color: rgb(100, 100, 100);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  height: 100vh;
+}
+
 @media (min-width: 1200px) {
   .data-background {
     background-image: url('./data-background.jpg');
@@ -87,4 +98,3 @@ code {
     width: 50vw;
   }
 }
-

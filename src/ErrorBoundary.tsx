@@ -24,7 +24,7 @@ class ErrorBoundary extends Component<{}, ErrorBoundaryState> {
   render() {
     if(this.state.error) {
       return (
-        <div className="text-light">
+        <div className="text-light error-background">
           <h3 className="error-message">{this.state.error.message}</h3>
         </div>
       );
