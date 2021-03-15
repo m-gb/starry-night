@@ -1,0 +1,27 @@
+#home {
+    background-image: url('./home-background.jpg');
+    background-color: rgb(100, 100, 100);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    height: 100vh;
+}
+
+.info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: lightgrey;
+}
+
+.info h1 {
+    font-size: 2.5rem;
+}
+
+.info p {
+    font-size: 1.1rem;
+}

@@ -69,14 +69,22 @@ code {
   height: 100vh;
 }
 
-.data-background {
-  background-image: url('./data-background.jpg');
-  background-color: rgb(100, 100, 100);
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-blend-mode: multiply;
-  height: 93vh;
-  /* width: 100%; */
+@media (min-width: 1200px) {
+  .data-background {
+    background-image: url('./data-background.jpg');
+    background-color: rgb(100, 100, 100);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode: multiply;
+    height: 93vh;
+  }
 }
+
+@media (max-width: 1200px) {
+  .form-inline {
+    width: 50vw;
+  }
+}
+
