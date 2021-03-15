@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import UnitConverter from './UnitConverter';
+import logo from './favicon.ico';
 
 interface NavBarProps {
   convertUnit: (newUnit: string) => void,
@@ -21,7 +22,7 @@ class NavBar extends Component<NavBarProps, {}> {
     return (
       <nav className="navbar navbar-expand-md navbar-dark bg-dark">
         <div className="collapse navbar-collapse">
-          <span className="navbar-brand text-info"><img alt="" className="logo" src="favicon.ico" /> Starry Night</span>
+          <span className="navbar-brand text-info"><img alt="" className="logo" src={logo} /> Starry Night</span>
         </div>
           <UnitConverter convertUnit={this.sendNewUnitToParent} unit={this.props.unit} />
           <SearchBar submitSearch={this.sendNewQueryToParent} />

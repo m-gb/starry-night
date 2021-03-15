@@ -77,7 +77,7 @@ class ForecastWeather extends Component<ForecastWeatherProps, ForecastWeatherSta
   showForecastdata = (forecastData: WeatherData[]): JSX.Element[] => {
     return forecastData.map(element => (
       <div className="col-lg-3" key={element.day}>
-        <div className="card bg-dark text-center mb-4">
+        <div className="card bg-transparent card-bg text-center mb-4">
           <div className="card-body">
             <h5 className="card-title">{element.day}</h5>
             <p className="card-text">{element.temp}<i className="wi wi-degrees" /></p>

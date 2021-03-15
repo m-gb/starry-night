@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ErrorBoundary from './ErrorBoundary';
+import Home from './home/Home';
 import NavBar from './nav/NavBar';
 import CurrentWeather from './weather/CurrentWeather';
 import ForecastWeather from './weather/ForecastWeather';
@@ -105,24 +106,27 @@ class App extends Component<{}, AppState> {
     const windSpeedUnit = (this.state.unit === 'C') ? 'm/s' : 'miles/hr';
     return (
       <div>
-        <NavBar convertUnit={this.onConvertUnit} submitSearch={this.onSubmitSearch} unit={this.state.unit} />
-        <div className="text-light">
-          {
-            (hasCurrentData && hasForecastData) ?
-              (
-                <main className="container">
-                  <ErrorBoundary>
-                    <CurrentWeather currentWeatherData={hasCurrentData} windSpeedUnit={windSpeedUnit} />
-                    <ForecastWeather forecastWeatherData={hasForecastData} />
-                  </ErrorBoundary>
-                </main>
-              ) :
-              (
-                <main className="container">
-                  <h3 className="error-message">Please allow location access or enter a city in the search bar.</h3>
-                </main>
-              )
-          }
+        <Home />
+        <div className="weather-data">
+          <NavBar convertUnit={this.onConvertUnit} submitSearch={this.onSubmitSearch} unit={this.state.unit} />
+          <div className="text-light data-background">
+            {
+              (hasCurrentData && hasForecastData) ?
+                (
+                  <main className="container">
+                    <ErrorBoundary>
+                      <CurrentWeather currentWeatherData={hasCurrentData} windSpeedUnit={windSpeedUnit} />
+                      <ForecastWeather forecastWeatherData={hasForecastData} />
+                    </ErrorBoundary>
+                  </main>
+                ):
+                (
+                  <main className="container">
+                    <h3 className="error-message">Please allow location access or enter a city in the search bar.</h3>
+                  </main>
+                )
+            }
+          </div>
         </div>
       </div>
     );

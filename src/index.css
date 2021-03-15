@@ -27,8 +27,22 @@ code {
   width: 4%;
 }
 
+.navbar {
+  height: 7vh;
+  background-color: rgb(0, 0, 0.5) !important;
+}
+
 .current-img {
   font-size: 8rem;
+}
+
+.card-bg {
+  background-color: rgb(0, 0, 0.5) !important;
+  opacity: 0.7;
+}
+
+.card-body {
+  opacity: 1;
 }
 
 .forecast-img {
@@ -49,4 +63,20 @@ code {
 
 .wi-gray {
   color:#5f6d7c;
+}
+
+.weather-data {
+  height: 100vh;
+}
+
+.data-background {
+  background-image: url('./data-background.jpg');
+  background-color: rgb(100, 100, 100);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: multiply;
+  height: 93vh;
+  /* width: 100%; */
 }
