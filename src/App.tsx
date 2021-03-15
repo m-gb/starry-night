@@ -55,8 +55,8 @@ class App extends Component<{}, AppState> {
   }
 
   notifyStateChange() {
-    const hasCoordinates: boolean = (this.state.coordinates != undefined);
-    const hasQuery: boolean = (this.state.query != '');
+    const hasCoordinates: boolean = (this.state.coordinates !== undefined);
+    const hasQuery: boolean = (this.state.query !== '');
     if (hasCoordinates || hasQuery) {
       this.fetchWeatherForecast(this.state.coordinates, 'weather')
         .then((currentData: any) => {
@@ -88,7 +88,7 @@ class App extends Component<{}, AppState> {
     const API_KEY: string = `${process.env.REACT_APP_API_KEY}`;
     const BASE_URI: string = 'https://api.openweathermap.org/data/2.5';
     const queryParams: string = (coordinates) ? `lat=${coordinates.latitude}&lon=${coordinates.longitude}` : `q=${this.state.query}`;
-    const unitType: string = (this.state.unit == 'C') ? 'metric' : 'imperial';
+    const unitType: string = (this.state.unit === 'C') ? 'metric' : 'imperial';
     const uri: string = `${BASE_URI}/${service}?${queryParams}&units=${unitType}&cnt=40&appid=${API_KEY}`;
     return axios.get(uri).then(res => {
       return res.data;
@@ -102,7 +102,7 @@ class App extends Component<{}, AppState> {
   render() {
     const hasCurrentData = this.state.currentWeatherData;
     const hasForecastData = this.state.forecastWeatherData;
-    const windSpeedUnit = (this.state.unit == 'C') ? 'm/s' : 'miles/hr';
+    const windSpeedUnit = (this.state.unit === 'C') ? 'm/s' : 'miles/hr';
     return (
       <div>
         <NavBar convertUnit={this.onConvertUnit} submitSearch={this.onSubmitSearch} unit={this.state.unit} />

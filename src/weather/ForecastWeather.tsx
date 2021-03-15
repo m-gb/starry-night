@@ -26,7 +26,7 @@ export function sortForecastData(data: any): any {
     let dt: Date = new Date(noonList[0].dt * 1000);
     let firstElementDate: string = `${dt.getFullYear()}-${dt.getMonth()}-${dt.getDate()}`;
     // Removes the first element if today is part of the results (i.e. before 15:00).
-    if (firstElementDate == todayDate) {
+    if (firstElementDate === todayDate) {
       noonList.shift();
     }
     else {

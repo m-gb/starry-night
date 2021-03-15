@@ -14,8 +14,8 @@ class UnitConverter extends Component<UnitConverterProps, {}> {
   render() {
     return (
       <div className="border border-info mx-2 rounded">
-        <button className={`btn text-light ${this.props.unit == 'C' ? "btn-info" : ""}`} onClick={this.handleClick}>C</button>
-        <button className={`btn text-light ${this.props.unit == 'F' ? "btn-info" : ""}`} onClick={this.handleClick}>F</button>
+        <button className={`btn text-light ${this.props.unit === 'C' ? "btn-info" : ""}`} onClick={this.handleClick}>C</button>
+        <button className={`btn text-light ${this.props.unit === 'F' ? "btn-info" : ""}`} onClick={this.handleClick}>F</button>
       </div>
     );
   }
