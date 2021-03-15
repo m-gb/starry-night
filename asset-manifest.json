@@ -1,15 +1,26 @@
 {
-  "main.css": "/starry-night/static/css/main.ee5c597f.chunk.css",
-  "main.js": "/starry-night/static/js/main.910972b7.chunk.js",
-  "main.js.map": "/starry-night/static/js/main.910972b7.chunk.js.map",
-  "runtime~main.js": "/starry-night/static/js/runtime~main.a7bdaaa1.js",
-  "runtime~main.js.map": "/starry-night/static/js/runtime~main.a7bdaaa1.js.map",
-  "static/css/2.a8f8bc36.chunk.css": "/starry-night/static/css/2.a8f8bc36.chunk.css",
-  "static/js/2.a347797c.chunk.js": "/starry-night/static/js/2.a347797c.chunk.js",
-  "static/js/2.a347797c.chunk.js.map": "/starry-night/static/js/2.a347797c.chunk.js.map",
-  "index.html": "/starry-night/index.html",
-  "precache-manifest.41840948b603312f2159baf5354df5ab.js": "/starry-night/precache-manifest.41840948b603312f2159baf5354df5ab.js",
-  "service-worker.js": "/starry-night/service-worker.js",
-  "static/css/2.a8f8bc36.chunk.css.map": "/starry-night/static/css/2.a8f8bc36.chunk.css.map",
-  "static/css/main.ee5c597f.chunk.css.map": "/starry-night/static/css/main.ee5c597f.chunk.css.map"
+  "files": {
+    "main.css": "/starry-night/static/css/main.4ba24267.chunk.css",
+    "main.js": "/starry-night/static/js/main.b905c081.chunk.js",
+    "main.js.map": "/starry-night/static/js/main.b905c081.chunk.js.map",
+    "runtime-main.js": "/starry-night/static/js/runtime-main.b1776282.js",
+    "runtime-main.js.map": "/starry-night/static/js/runtime-main.b1776282.js.map",
+    "static/css/2.ba27c2ca.chunk.css": "/starry-night/static/css/2.ba27c2ca.chunk.css",
+    "static/js/2.9063d16c.chunk.js": "/starry-night/static/js/2.9063d16c.chunk.js",
+    "static/js/2.9063d16c.chunk.js.map": "/starry-night/static/js/2.9063d16c.chunk.js.map",
+    "index.html": "/starry-night/index.html",
+    "static/css/2.ba27c2ca.chunk.css.map": "/starry-night/static/css/2.ba27c2ca.chunk.css.map",
+    "static/css/main.4ba24267.chunk.css.map": "/starry-night/static/css/main.4ba24267.chunk.css.map",
+    "static/js/2.9063d16c.chunk.js.LICENSE.txt": "/starry-night/static/js/2.9063d16c.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/starry-night/static/media/data-background.11816fd0.jpg",
+    "static/media/favicon.a4009289.ico": "/starry-night/static/media/favicon.a4009289.ico",
+    "static/media/Home.css": "/starry-night/static/media/home-background.e4bd6fba.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b1776282.js",
+    "static/css/2.ba27c2ca.chunk.css",
+    "static/js/2.9063d16c.chunk.js",
+    "static/css/main.4ba24267.chunk.css",
+    "static/js/main.b905c081.chunk.js"
+  ]
 }
