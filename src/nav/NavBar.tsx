@@ -20,7 +20,7 @@ class NavBar extends Component<NavBarProps, {}> {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-md">
         <div className="collapse navbar-collapse">
           <span className="navbar-brand text-info"><img alt="" className="logo" src={logo} /> Starry Night</span>
         </div>

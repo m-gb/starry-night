@@ -28,8 +28,8 @@ code {
 }
 
 .navbar {
-  height: 7vh;
   background-color: rgb(0, 0, 0.5) !important;
+  opacity: 0.9;
 }
 
 .current-img {
@@ -38,7 +38,7 @@ code {
 
 .card-bg {
   background-color: rgb(0, 0, 0.5) !important;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
 .card-body {
@@ -65,10 +65,6 @@ code {
   color:#5f6d7c;
 }
 
-.weather-data {
-  height: 100vh;
-}
-
 .error-background {
   background-image: url('./data-background.jpg');
   background-color: rgb(100, 100, 100);
@@ -89,7 +85,7 @@ code {
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: multiply;
-    height: 93vh;
+    height: 100vh;
   }
 }
 
