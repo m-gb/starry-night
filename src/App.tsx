@@ -107,9 +107,9 @@ class App extends Component<{}, AppState> {
     return (
       <div>
         <Home />
-        <div className="data-background">
+        <div className="weather-data">
           <NavBar convertUnit={this.onConvertUnit} submitSearch={this.onSubmitSearch} unit={this.state.unit} />
-          <div className="text-light">
+          <div className="text-light data-background">
             {
               (hasCurrentData && hasForecastData) ?
                 (

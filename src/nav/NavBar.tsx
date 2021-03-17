@@ -24,8 +24,14 @@ class NavBar extends Component<NavBarProps, {}> {
         <div className="collapse navbar-collapse">
           <span className="navbar-brand text-info"><img alt="" className="logo" src={logo} /> Starry Night</span>
         </div>
+        <div className="row">
+          <div className="col-4">
           <UnitConverter convertUnit={this.sendNewUnitToParent} unit={this.props.unit} />
+          </div>
+          <div className="col-8">
           <SearchBar submitSearch={this.sendNewQueryToParent} />
+          </div>
+        </div>
       </nav>
     );
   }
